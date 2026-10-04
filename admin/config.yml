@@ -81,3 +81,43 @@ collections:
           - { name: theme_light, label: Przełącznik motywu — jasny, widget: string, i18n: true }
           - { name: theme_dark, label: Przełącznik motywu — ciemny, widget: string, i18n: true }
           - { name: footer, label: Stopka, widget: string, i18n: true }
+
+          - name: legal
+            label: Informacje prawne
+            widget: object
+            i18n: true
+            fields:
+              - { name: link_label, label: Link w stopce, widget: string, i18n: true }
+              - { name: title, label: Tytuł strony, widget: string, i18n: true }
+              # Operator fields are optional on purpose: while the operator is unknown, a required
+              # field would block saving every other content change. The page and its footer link
+              # appear only once name, address and email are all filled in.
+              - name: operator_name
+                label: 'Podmiot: nazwa (firma)'
+                widget: string
+                i18n: duplicate
+                required: false
+                hint: 'Pełna nazwa z KRS albo CEIDG z formą prawną, np. „Prowe sp. z o.o.”. Strona prawna i link w stopce pojawią się, gdy nazwa, adres i e-mail będą wypełnione.'
+              - name: operator_address
+                label: 'Podmiot: siedziba i adres'
+                widget: string
+                i18n: duplicate
+                required: false
+                hint: 'Siedziba i adres z KRS albo adres działalności z CEIDG.'
+              - name: operator_email
+                label: 'Podmiot: e-mail'
+                widget: string
+                i18n: duplicate
+                required: false
+                hint: 'Obsługiwana skrzynka. Na ten adres przychodzą też żądania z RODO.'
+              - name: operator_registry
+                label: 'Podmiot: dane rejestrowe'
+                widget: string
+                i18n: true
+                required: false
+                hint: 'Jedna linia. Sp. z o.o.: sąd rejestrowy, KRS, NIP, kapitał zakładowy (art. 206 KSH). P.S.A.: sąd rejestrowy, KRS, NIP, aktualny kapitał akcyjny (art. 300⁶¹ KSH). S.A.: sąd rejestrowy, KRS, NIP, kapitał zakładowy i wpłacony (art. 374 KSH). JDG: NIP.'
+              - name: body
+                label: Treść
+                widget: markdown
+                i18n: true
+                hint: 'Wstawki {operator_name}, {operator_address}, {operator_email} i {operator_registry} strona zastępuje danymi z pól powyżej.'
