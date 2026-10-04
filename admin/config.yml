@@ -3,6 +3,9 @@ backend:
   name: github
   repo: Alpaq92/prowe-website
   branch: main
+  # Token only until an OAuth authenticator is deployed: today the
+  # "Sign in with GitHub" button goes to api.netlify.com and ends in a 404.
+  auth_methods: [token]
 
 site_url: https://alpaq92.github.io/prowe-website/
 
