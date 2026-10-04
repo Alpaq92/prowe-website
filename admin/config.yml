@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.227.4/schema/sveltia-cms.json
+backend:
+  name: github
+  repo: Alpaq92/prowe-website
+  branch: main
+
+site_url: https://alpaq92.github.io/prowe-website/
+
+media_folder: images
+public_folder: images
+
+i18n:
+  locales: [pl, en]
+  default_locale: pl
+
+collections:
+  - name: site
+    label: Strona
+    i18n: true
+    files:
+      - name: content
+        label: Treść strony
+        file: content/{{locale}}.json
+        format: json
+        i18n: true
+        fields:
+          - { name: title, label: Nazwa, widget: string, i18n: true }
+          - { name: headline, label: Nagłówek, widget: text, i18n: true }
+          - { name: intro, label: Wstęp, widget: text, i18n: true }
+          - { name: cta_label, label: Przycisk pod wstępem, widget: string, i18n: true }
+
+          - { name: goals_heading, label: Nagłówek sekcji celów, widget: string, i18n: true }
+          - name: goals
+            label: Cele
+            label_singular: Cel
+            widget: list
+            i18n: duplicate
+            fields:
+              - { name: title, label: Tytuł, widget: string, i18n: true }
+              - { name: text, label: Opis, widget: text, i18n: true }
+
+          - { name: modules_heading, label: Nagłówek sekcji modułów, widget: string, i18n: true }
+          - name: modules
+            label: Moduły
+            label_singular: Moduł
+            widget: list
+            i18n: duplicate
+            summary: '{{name}}'
+            fields:
+              - { name: slug, label: Adres (slug), widget: string, i18n: duplicate, pattern: ['^[a-z0-9-]+$', 'Małe litery, cyfry i myślniki'] }
+              - { name: name, label: Nazwa, widget: string, i18n: duplicate }
+              - name: status
+                label: Status
+                widget: select
+                i18n: duplicate
+                default: live
+                options:
+                  - { label: Dostępny, value: live }
+                  - { label: Wkrótce, value: soon }
+              - { name: category, label: Kategoria, widget: string, i18n: true }
+              - { name: summary, label: Opis skrócony, widget: text, i18n: true }
+              - { name: body, label: Opis, widget: markdown, i18n: true, required: false }
+
+          - { name: stack_heading, label: Nagłówek sekcji technologii, widget: string, i18n: true }
+          - name: stack
+            label: Technologia
+            label_singular: Wiersz
+            widget: list
+            i18n: duplicate
+            fields:
+              - { name: label, label: Etykieta, widget: string, i18n: true }
+              - { name: value, label: Wartość, widget: string, i18n: true }
+
+          - { name: soon_label, label: Etykieta „wkrótce”, widget: string, i18n: true }
+          - { name: back_label, label: Link powrotny, widget: string, i18n: true }
+          - { name: theme_system, label: Przełącznik motywu — systemowy, widget: string, i18n: true }
+          - { name: theme_light, label: Przełącznik motywu — jasny, widget: string, i18n: true }
+          - { name: theme_dark, label: Przełącznik motywu — ciemny, widget: string, i18n: true }
+          - { name: footer, label: Stopka, widget: string, i18n: true }

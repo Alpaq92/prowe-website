@@ -1,0 +1,71 @@
+{
+  "title": "Prowe",
+  "headline": "Oprogramowanie dla kancelarii, które działa na Twoim serwerze.",
+  "intro": "Prowe to platforma modułów dla kancelarii i działów prawnych: dokumenty, sprawy, kwestionariusze i umowy. Moduły dzielą jeden rdzeń — konta, uprawnienia i dziennik zdarzeń.",
+  "cta_label": "Zobacz moduły",
+  "goals_heading": "Cele",
+  "goals": [
+    { "title": "Dane zostają u Ciebie", "text": "Prowe instaluje się na serwerze kancelarii. Akta nie trafiają do cudzej chmury." },
+    { "title": "Historia, którą można udowodnić", "text": "Dziennik zdarzeń jest tylko do dopisywania: aplikacja nie ma uprawnień, by go zmienić. Dokumenty są wersjonowane w git." },
+    { "title": "Jedna platforma", "text": "Jedno konto, jeden panel administracji i wspólne uprawnienia dla wszystkich modułów." },
+    { "title": "Otwarte fundamenty", "text": "Wyłącznie komponenty open source na licencjach permisywnych. Bez uzależnienia od dostawcy." },
+    { "title": "Po polsku i po angielsku", "text": "Interfejs i treści w obu językach od pierwszego dnia." }
+  ],
+  "modules_heading": "Moduły",
+  "modules": [
+    {
+      "slug": "atrium",
+      "name": "Atrium",
+      "status": "live",
+      "category": "Platforma",
+      "summary": "Punkt wejścia: launcher, katalog modułów i administracja.",
+      "body": "Atrium pokazuje moduły, do których masz dostęp, i pozwala poprosić o pozostałe. Administrator zarządza w nim całą platformą.\n\n- Launcher z Twoimi aplikacjami i przełącznik modułów\n- Katalog modułów z prośbami o dostęp\n- Dostęp dla osób i jednostek organizacyjnych, łącznie z jednostkami podrzędnymi\n- Konta, uprawnienia, drzewo organizacji i dziennik zdarzeń w jednym panelu"
+    },
+    {
+      "slug": "galena",
+      "name": "Galena",
+      "status": "live",
+      "category": "Dokumenty",
+      "summary": "Dysk w chmurze z pełną historią zmian w git.",
+      "body": "Galena wygląda jak zwykły dysk: przestrzenie robocze, foldery, przeciąganie plików, udostępnianie. Pod spodem każdy plik leży w repozytorium git.\n\n- Każda zmiana ma autora i datę; historia pliku i graf wersji\n- Wersje robocze przechodzą przegląd przed publikacją\n- Podgląd PDF i obrazów\n- Opcjonalne szyfrowanie AES-256-GCM plików i folderów"
+    },
+    {
+      "slug": "sygna",
+      "name": "Sygna",
+      "status": "live",
+      "category": "Kancelaria",
+      "summary": "Zarządzanie kancelarią: klienci, sprawy, terminy i czas pracy.",
+      "body": "Sygna prowadzi kancelarię od pierwszego kontaktu do rozliczenia.\n\n- Klienci, sprawy i strony postępowań\n- Sprawdzanie konfliktu interesów przy przyjęciu sprawy\n- Terminy procesowe i ewidencja czasu pracy\n- Bariery informacyjne: sprawa wydzielona znika dla osób spoza zespołu, także dla administratora"
+    },
+    {
+      "slug": "counsel",
+      "name": "Counsel Scorecard",
+      "status": "live",
+      "category": "Ocena",
+      "summary": "Kwestionariusze z punktacją i historią odpowiedzi.",
+      "body": "Counsel Scorecard buduje kwestionariusze i przechowuje odpowiedzi razem z historią zmian.\n\n- Pytania, warianty odpowiedzi i ważone zestawy\n- Punktacja liczona automatycznie\n- Każda korekta odpowiedzi zostaje w historii\n- Wyszukiwanie pełnotekstowe ograniczone uprawnieniami"
+    },
+    {
+      "slug": "compass",
+      "name": "Compass",
+      "status": "soon",
+      "category": "Umowy",
+      "summary": "Zarządzanie umowami dla zespołów prawnych.",
+      "body": "Compass to system zarządzania umowami dla działów prawnych i kancelarii działających w wielu jurysdykcjach.\n\n- Repozytorium umów z terminami i odnowieniami\n- Warianty klauzul dla różnych jurysdykcji\n- Asysta AI przy redagowaniu klauzul"
+    }
+  ],
+  "stack_heading": "Technologia",
+  "stack": [
+    { "label": "Backend", "value": "Python, FastAPI, SQLAlchemy" },
+    { "label": "Baza danych", "value": "PostgreSQL; osobny schemat i role dla każdego modułu" },
+    { "label": "Logowanie", "value": "Argon2id, sesje po stronie serwera" },
+    { "label": "Dziennik zdarzeń", "value": "Tylko do dopisywania, wymuszone uprawnieniami bazy" },
+    { "label": "Wdrożenie", "value": "Docker Compose i Caddy na jednym serwerze" }
+  ],
+  "soon_label": "wkrótce",
+  "back_label": "Wszystkie moduły",
+  "theme_system": "Motyw systemowy",
+  "theme_light": "Motyw jasny",
+  "theme_dark": "Motyw ciemny",
+  "footer": "© 2026 Prowe"
+}
