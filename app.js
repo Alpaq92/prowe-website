@@ -79,6 +79,13 @@ function modulePage(site, mod) {
   ];
 }
 
+// Section links in the header. On a module page they lead back to the home page sections.
+function renderNav(site) {
+  const sections = [['goals', site.goals_heading], ['modules', site.modules_heading], ['stack', site.stack_heading]];
+  document.getElementById('nav').replaceChildren(...sections.map(([id, text]) =>
+    el('a', { href: slug ? href(lang, null, `#${id}`) : `#${id}` }, text)));
+}
+
 function setupThemeSwitch(site) {
   const root = document.documentElement;
   const buttons = [...document.querySelectorAll('#theme-switch button')];
@@ -118,7 +125,10 @@ async function render() {
   const mod = slug && site.modules.find((m) => m.slug === slug);
   app.replaceChildren(...(mod ? modulePage(site, mod) : homePage(site)));
   document.getElementById('footer').textContent = site.footer;
+  renderNav(site);
   setupThemeSwitch(site);
+  // The content arrives after load, so the browser's own jump to #section missed it.
+  if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
 }
 
 render();

@@ -65,7 +65,14 @@ a { color: var(--accent); }
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
-.top-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 60px; }
+.top-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 0 12px; min-height: 60px; }
+
+.nav { display: flex; gap: 24px; margin: 0 auto 0 32px; }
+.nav a { color: var(--muted); font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap; }
+.nav a:hover { color: var(--fg); }
+
+/* Clear the sticky header when jumping to a section. */
+.section { scroll-margin-top: 72px; }
 
 .brand {
   display: flex;
@@ -247,6 +254,13 @@ a { color: var(--accent); }
 footer { padding: 32px 20px 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 
 /* ── small screens ──────────────────────────────────────── */
+@media (max-width: 720px) {
+  /* Section links drop to their own row under the brand and controls. */
+  .top-inner { justify-content: space-between; padding-top: 8px; }
+  .nav { order: 3; width: 100%; margin: 8px 0 0; padding: 10px 0; border-top: 1px solid var(--line); overflow-x: auto; }
+  .section { scroll-margin-top: 124px; }
+}
+
 @media (max-width: 600px) {
   .wrap { padding: 0 16px; }
   .brand { font-size: 16px; }
