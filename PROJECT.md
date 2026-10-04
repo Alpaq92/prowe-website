@@ -6,12 +6,12 @@ For running it locally see [README.md](README.md).
 ## What it is
 
 A one-page site plus one page per module, in Polish and English, edited in a browser at
-`/admin/`. Hosted on GitHub Pages from this repository.
+**[/admin/](https://alpaq92.github.io/prowe-website/admin/)**. Hosted on GitHub Pages from this repository.
 
 | | |
 |---|---|
-| Site | https://alpaq92.github.io/prowe-website/ |
-| Admin | https://alpaq92.github.io/prowe-website/admin/ |
+| Site | [alpaq92.github.io/prowe-website](https://alpaq92.github.io/prowe-website/) |
+| Admin | [alpaq92.github.io/prowe-website/admin](https://alpaq92.github.io/prowe-website/admin/) |
 | Content | `content/pl.json`, `content/en.json` |
 | Publishing | `.github/workflows/pages.yml`, on every push to `main` |
 
@@ -54,7 +54,7 @@ edit.** Add editors as collaborators: repository → Settings → Collaborators.
 
 ### With an access token (works now)
 
-1. Open `/admin/` and choose **Zaloguj się za pomocą tokenu dostępu**.
+1. Open the [admin page](https://alpaq92.github.io/prowe-website/admin/) and choose **Zaloguj się za pomocą tokenu dostępu**.
 2. The dialog links to GitHub's token page with the right permissions pre-selected. Create the
    token and paste it.
    - Fine-grained token: this repository only, **Contents: Read and write**.
