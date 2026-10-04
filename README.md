@@ -2,7 +2,7 @@
 
 The public website of Prowe, a platform of modules for law firms and legal departments.
 
-**Live:** https://alpaq92.github.io/prowe-website/ · **Admin:** https://alpaq92.github.io/prowe-website/admin/
+**Live:** [alpaq92.github.io/prowe-website](https://alpaq92.github.io/prowe-website/) · **Admin:** [/admin/](https://alpaq92.github.io/prowe-website/admin/)
 
 Plain HTML, CSS and JavaScript, edited with [Sveltia CMS](https://sveltiacms.app) (MIT).
 No framework, no build step, no server.
