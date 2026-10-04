@@ -1,0 +1,71 @@
+{
+  "title": "Prowe",
+  "headline": "Legal software that runs on your own server.",
+  "intro": "Prowe is a platform of modules for law firms and legal departments: documents, matters, questionnaires and contracts. The modules share one core — accounts, permissions and the audit log.",
+  "cta_label": "See the modules",
+  "goals_heading": "Goals",
+  "goals": [
+    { "title": "Your data stays with you", "text": "Prowe is installed on the firm's own server. Client files never go to someone else's cloud." },
+    { "title": "History you can prove", "text": "The audit log is append-only: the application has no permission to change it. Documents are versioned in git." },
+    { "title": "One platform", "text": "One account, one admin pane and shared permissions across every module." },
+    { "title": "Open foundations", "text": "Built only on permissively licensed open-source components. No vendor lock-in." },
+    { "title": "Polish and English", "text": "Interface and content in both languages from day one." }
+  ],
+  "modules_heading": "Modules",
+  "modules": [
+    {
+      "slug": "atrium",
+      "name": "Atrium",
+      "status": "live",
+      "category": "Platform",
+      "summary": "The front door: launcher, module catalog and administration.",
+      "body": "Atrium shows the modules you have access to and lets you request the rest. Administrators run the whole platform from it.\n\n- A launcher with your apps and a module switcher\n- A module catalog with access requests\n- Access for people and organizational units, including the units below them\n- Accounts, permissions, the organization tree and the audit log in one pane"
+    },
+    {
+      "slug": "galena",
+      "name": "Galena",
+      "status": "live",
+      "category": "Documents",
+      "summary": "A cloud drive with the full change history in git.",
+      "body": "Galena looks like an ordinary drive: workspaces, folders, drag-and-drop, sharing. Underneath, every file lives in a git repository.\n\n- Every change has an author and a date; file history and a version graph\n- Drafts are reviewed before they are published\n- PDF and image preview\n- Optional AES-256-GCM encryption of files and folders"
+    },
+    {
+      "slug": "sygna",
+      "name": "Sygna",
+      "status": "live",
+      "category": "Practice",
+      "summary": "Practice management: clients, matters, deadlines and time.",
+      "body": "Sygna runs a firm from first contact to the final invoice.\n\n- Clients, matters and the parties to them\n- Conflict-of-interest check when a matter is opened\n- Procedural deadlines and time recording\n- Information barriers: a walled matter disappears for everyone outside its team, administrators included"
+    },
+    {
+      "slug": "counsel",
+      "name": "Counsel Scorecard",
+      "status": "live",
+      "category": "Assessment",
+      "summary": "Scored questionnaires with a full answer history.",
+      "body": "Counsel Scorecard builds questionnaires and keeps the answers together with their change history.\n\n- Questions, answer options and weighted sets\n- Scores calculated automatically\n- Every correction to an answer stays in the history\n- Full-text search, limited by permissions"
+    },
+    {
+      "slug": "compass",
+      "name": "Compass",
+      "status": "soon",
+      "category": "Contracts",
+      "summary": "Contract management for legal teams.",
+      "body": "Compass is a contract management system for legal departments and firms working across several jurisdictions.\n\n- A contract repository with dates and renewals\n- Clause variants for different jurisdictions\n- AI assistance when drafting clauses"
+    }
+  ],
+  "stack_heading": "Technology",
+  "stack": [
+    { "label": "Backend", "value": "Python, FastAPI, SQLAlchemy" },
+    { "label": "Database", "value": "PostgreSQL; a separate schema and roles for each module" },
+    { "label": "Sign-in", "value": "Argon2id, server-side sessions" },
+    { "label": "Audit log", "value": "Append-only, enforced by database permissions" },
+    { "label": "Deployment", "value": "Docker Compose and Caddy on a single server" }
+  ],
+  "soon_label": "soon",
+  "back_label": "All modules",
+  "theme_system": "System theme",
+  "theme_light": "Light theme",
+  "theme_dark": "Dark theme",
+  "footer": "© 2026 Prowe"
+}
