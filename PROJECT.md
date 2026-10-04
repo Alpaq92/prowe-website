@@ -85,6 +85,9 @@ repository folder; edits are written straight to the files, and you commit them 
 ## To do
 
 - [ ] **Sign in with GitHub** — deploy the authenticator (above), so editors need no tokens.
+      Until then, sign in with **Zaloguj się za pomocą tokenu dostępu** and a GitHub token.
+- [ ] **Remove leftover Publii data** — the Publii app and the `Documents\Publii` folder on the
+      development machine are no longer used by this site.
 - [ ] **Custom domain** — set it in repository → Settings → Pages, then update `site_url` in
       `admin/config.yml` and the links in the README.
 - [ ] **Imprint and privacy page** — a public company site in the EU needs contact details and a
