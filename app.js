@@ -31,6 +31,17 @@ function markdown(text) {
   return node;
 }
 
+// Polish typesetting keeps one-letter words off the end of a line. Done in code because
+// non-breaking spaces typed in the CMS are invisible to editors and get lost.
+const glue = (s) => s.replace(/(?<=^|\s)([aiouwz]) /gi, '$1\u00a0');
+const deepGlue = (v) => typeof v === 'string' ? glue(v)
+  : Array.isArray(v) ? v.map(deepGlue)
+  : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deepGlue(x)]))
+  : v;
+
+// Google reads a description set by script; index.html keeps a static one for crawlers without JS.
+const describe = (text) => document.querySelector('meta[name="description"]').setAttribute('content', text);
+
 const badge = (site, mod) => (mod.status === 'soon' ? el('span', { class: 'badge' }, site.soon_label) : null);
 const label = (text) => el('p', { class: 'label' }, text);
 
@@ -43,7 +54,8 @@ function moduleCard(site, mod) {
 }
 
 function homePage(site) {
-  document.title = `${site.title} — ${site.headline}`;
+  document.title = `${site.title} | ${site.headline.replace(/\.$/, '')}`;
+  describe(site.description);
   return [
     el('section', { class: 'hero' },
       el('h1', {}, site.headline),
@@ -64,7 +76,8 @@ function homePage(site) {
 }
 
 function modulePage(site, mod) {
-  document.title = `${mod.name} — ${site.title}`;
+  document.title = `${mod.name} | ${site.title}`;
+  describe(mod.summary);
   const others = site.modules.filter((m) => m.slug !== mod.slug);
   return [
     el('a', { class: 'back', href: href(lang, null, '#modules') }, `← ${site.back_label}`),
@@ -125,7 +138,8 @@ async function render() {
     app.replaceChildren(el('p', {}, `content/${lang}.json: HTTP ${response.status}`));
     return;
   }
-  const site = await response.json();
+  const json = await response.json();
+  const site = lang === 'pl' ? deepGlue(json) : json;
   const mod = slug && site.modules.find((m) => m.slug === slug);
   app.replaceChildren(...(mod ? modulePage(site, mod) : homePage(site)));
   document.getElementById('footer').textContent = site.footer;

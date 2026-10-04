@@ -30,6 +30,7 @@ collections:
           - { name: title, label: Nazwa, widget: string, i18n: true }
           - { name: headline, label: Nagłówek, widget: text, i18n: true }
           - { name: intro, label: Wstęp, widget: text, i18n: true }
+          - { name: description, label: Opis strony dla wyszukiwarek, widget: text, i18n: true }
           - { name: cta_label, label: Przycisk pod wstępem, widget: string, i18n: true }
 
           - { name: goals_heading, label: Nagłówek sekcji celów, widget: string, i18n: true }

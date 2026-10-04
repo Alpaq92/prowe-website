@@ -1,15 +1,16 @@
 {
   "title": "Prowe",
-  "headline": "Oprogramowanie dla kancelarii, które działa na Twoim serwerze.",
-  "intro": "Prowe to platforma modułów dla kancelarii i działów prawnych: dokumenty, sprawy, kwestionariusze i umowy. Moduły dzielą jeden rdzeń — konta, uprawnienia i dziennik zdarzeń.",
+  "headline": "Oprogramowanie dla prawników, które działa na Twoim serwerze.",
+  "intro": "Prowe to modułowa platforma dla kancelarii i działów prawnych. Obejmuje dokumenty, sprawy, ocenę kancelarii zewnętrznych i analizę umów. Wszystkie moduły stoją na wspólnym rdzeniu, który odpowiada za konta, uprawnienia i dziennik zdarzeń.",
+  "description": "Prowe to modułowa platforma dla kancelarii i działów prawnych, która działa na Twoim serwerze.",
   "cta_label": "Zobacz moduły",
   "goals_heading": "Cele",
   "goals": [
-    { "title": "Dane zostają u Ciebie", "text": "Prowe instaluje się na serwerze kancelarii. Akta nie trafiają do cudzej chmury." },
-    { "title": "Historia, którą można udowodnić", "text": "Dziennik zdarzeń jest tylko do dopisywania: aplikacja nie ma uprawnień, by go zmienić. Dokumenty są wersjonowane w git." },
-    { "title": "Jedna platforma", "text": "Jedno konto, jeden panel administracji i wspólne uprawnienia dla wszystkich modułów." },
-    { "title": "Otwarte fundamenty", "text": "Wyłącznie komponenty open source na licencjach permisywnych. Bez uzależnienia od dostawcy." },
-    { "title": "Po polsku i po angielsku", "text": "Interfejs i treści w obu językach od pierwszego dnia." }
+    { "title": "Dane zostają u Ciebie", "text": "Prowe instaluje się na serwerze kancelarii lub firmy. Akta nie trafiają do cudzej chmury, chyba że administrator sam podłączy zewnętrzną usługę, np. bazę danych albo model AI." },
+    { "title": "Historia, którą można sprawdzić", "text": "Dziennik zdarzeń jest tylko do dopisywania: aplikacja nie ma uprawnień, by go zmienić. W Galenie każda wersja dokumentu zostaje zachowana, razem z informacją, kto i kiedy ją utworzył." },
+    { "title": "Jedna platforma", "text": "Jedno konto i jedno logowanie do wszystkich dostępnych modułów. Konta i dostęp do modułów są w jednym panelu administracji." },
+    { "title": "Otwarte fundamenty", "text": "Prowe stoi na otwartym oprogramowaniu, w większości na licencjach permisywnych. Dane leżą w bazie PostgreSQL, w repozytoriach Git i w zwykłych plikach, nie w zamkniętym formacie." },
+    { "title": "Po polsku i po angielsku", "text": "Interfejs po polsku i po angielsku. W Sygnie angielska wersja obejmuje na razie tylko główne etykiety." }
   ],
   "modules_heading": "Moduły",
   "modules": [
@@ -18,16 +19,16 @@
       "name": "Atrium",
       "status": "live",
       "category": "Platforma",
-      "summary": "Punkt wejścia: launcher, katalog modułów i administracja.",
-      "body": "Atrium pokazuje moduły, do których masz dostęp, i pozwala poprosić o pozostałe. Administrator zarządza w nim całą platformą.\n\n- Launcher z Twoimi aplikacjami i przełącznik modułów\n- Katalog modułów z prośbami o dostęp\n- Dostęp dla osób i jednostek organizacyjnych, łącznie z jednostkami podrzędnymi\n- Konta, uprawnienia, drzewo organizacji i dziennik zdarzeń w jednym panelu"
+      "summary": "Punkt wejścia: ekran startowy, katalog modułów i administracja.",
+      "body": "Atrium pokazuje moduły, do których masz dostęp, i pozwala poprosić o pozostałe. Administrator zarządza w nim kontami i dostępem do wszystkich modułów.\n\n- Ekran startowy z Twoimi modułami i przełącznik modułów na górnym pasku\n- Katalog modułów z prośbami o dostęp\n- Dostęp dla osób i jednostek organizacyjnych, łącznie z jednostkami podrzędnymi\n- Konta, dostęp do modułów i struktura organizacyjna w jednym panelu, z własnym dziennikiem zdarzeń"
     },
     {
       "slug": "galena",
       "name": "Galena",
       "status": "live",
       "category": "Dokumenty",
-      "summary": "Dysk w chmurze z pełną historią zmian w git.",
-      "body": "Galena wygląda jak zwykły dysk: przestrzenie robocze, foldery, przeciąganie plików, udostępnianie. Pod spodem każdy plik leży w repozytorium git.\n\n- Każda zmiana ma autora i datę; historia pliku i graf wersji\n- Wersje robocze przechodzą przegląd przed publikacją\n- Podgląd PDF i obrazów\n- Opcjonalne szyfrowanie AES-256-GCM plików i folderów"
+      "summary": "Wspólny dysk dla zespołu, z pełną historią zmian.",
+      "body": "Galena wygląda jak zwykły dysk: przestrzenie robocze, foldery, przenoszenie plików przeciąganiem, udostępnianie. Pod spodem każdy plik leży w repozytorium Git, więc historia zmian zapisuje się sama i nikt nie musi znać tego narzędzia.\n\n- Historia każdego pliku: kto, co i kiedy zmienił\n- Interaktywny schemat wszystkich wersji\n- Opcjonalny przegląd: szkice z komentarzami i zatwierdzeniem przed publikacją\n- Podgląd PDF i obrazów\n- Opcjonalne szyfrowanie pojedynczych plików (AES-256-GCM)"
     },
     {
       "slug": "sygna",
@@ -35,23 +36,23 @@
       "status": "live",
       "category": "Kancelaria",
       "summary": "Zarządzanie kancelarią: klienci, sprawy, terminy i czas pracy.",
-      "body": "Sygna prowadzi kancelarię od pierwszego kontaktu do rozliczenia.\n\n- Klienci, sprawy i strony postępowań\n- Sprawdzanie konfliktu interesów przy przyjęciu sprawy\n- Terminy procesowe i ewidencja czasu pracy\n- Bariery informacyjne: sprawa wydzielona znika dla osób spoza zespołu, także dla administratora"
+      "body": "W Sygnie prowadzisz sprawę od pierwszego kontaktu z klientem do rozliczenia.\n\n- Klienci, sprawy i strony postępowań\n- Sprawdzanie konfliktu interesów przy przyjęciu sprawy\n- Terminy procesowe i rejestracja czasu pracy nad sprawami\n- Bariery informacyjne: wskazane osoby, także administrator, tracą dostęp do wydzielonej sprawy"
     },
     {
       "slug": "counsel",
       "name": "Counsel Scorecard",
       "status": "live",
       "category": "Ocena",
-      "summary": "Kwestionariusze z punktacją i historią odpowiedzi.",
-      "body": "Counsel Scorecard buduje kwestionariusze i przechowuje odpowiedzi razem z historią zmian.\n\n- Pytania, warianty odpowiedzi i ważone zestawy\n- Punktacja liczona automatycznie\n- Każda korekta odpowiedzi zostaje w historii\n- Wyszukiwanie pełnotekstowe ograniczone uprawnieniami"
+      "summary": "Ocena kancelarii zewnętrznych: kwestionariusze z punktacją i historią odpowiedzi.",
+      "body": "Counsel Scorecard służy do tworzenia kwestionariuszy z punktacją. W gotowej konfiguracji dział prawny ocenia w nim kancelarie zewnętrzne, a odpowiedzi zostają zapisane razem z historią zmian.\n\n- Pytania, warianty odpowiedzi i waga każdego pytania\n- Punktacja liczona automatycznie\n- Każda korekta odpowiedzi zostaje w historii\n- Wyszukiwanie pełnotekstowe pokazuje tylko to, do czego masz dostęp"
     },
     {
       "slug": "compass",
       "name": "Compass",
       "status": "soon",
       "category": "Umowy",
-      "summary": "Zarządzanie umowami dla zespołów prawnych.",
-      "body": "Compass to system zarządzania umowami dla działów prawnych i kancelarii działających w wielu jurysdykcjach.\n\n- Repozytorium umów z terminami i odnowieniami\n- Warianty klauzul dla różnych jurysdykcji\n- Asysta AI przy redagowaniu klauzul"
+      "summary": "Analiza umów z podpisem prawnika pod raportem.",
+      "body": "Compass służy kancelariom i działom prawnym do analizy umów. Prawnik uruchamia analizę, czyta raport i podpisuje, że go przejrzał.\n\n- Karta umowy: strony, okres obowiązywania, przedłużenie i to, czy umowa obowiązuje; każda wartość z cytatem\n- Czerwone linie kancelarii (np. limit kar umownych): werdykt przy każdej regule ze wskazaniem paragrafu\n- Model AI działa lokalnie, np. na laptopie prawnika, albo u zewnętrznego dostawcy wybranego przez administratora (domyślnie tylko w UE/EOG)"
     }
   ],
   "stack_heading": "Technologia",
@@ -60,6 +61,7 @@
     { "label": "Baza danych", "value": "PostgreSQL; osobny schemat i role dla każdego modułu" },
     { "label": "Logowanie", "value": "Argon2id, sesje po stronie serwera" },
     { "label": "Dziennik zdarzeń", "value": "Tylko do dopisywania, wymuszone uprawnieniami bazy" },
+    { "label": "Wersje dokumentów", "value": "Git (Galena)" },
     { "label": "Wdrożenie", "value": "Docker Compose i Caddy na jednym serwerze" }
   ],
   "soon_label": "wkrótce",
