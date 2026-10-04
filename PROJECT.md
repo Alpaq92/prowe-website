@@ -33,7 +33,10 @@ Polish and English are built in, edited side by side.
 writes JSON, and `app.js` (about 175 lines) renders it in the browser. Nothing to compile, nothing
 to upgrade except two pinned scripts. marked is a copy in `vendor/marked`, served from the site
 (MIT, with a BSD notice, in `vendor/marked/LICENSE`); the Sveltia script loads from a CDN with an
-SRI hash, so the browser refuses it if the file changes.
+SRI hash, so the browser refuses it if the file changes. The hash covers only that file: some
+features make Sveltia import more code from unpkg.com without a hash, e.g. the image metadata
+reader when an image is selected in the media library and the code highlighter when a Markdown
+field holds a code block.
 
 **GitHub Pages** because the repository is already on GitHub: free for a public repository, and
 the workflow redeploys whenever the CMS commits.
@@ -65,7 +68,7 @@ read access only. Add editors as collaborators: repository → Settings → Coll
 
 ### Where the token lives
 
-Sveltia keeps the editor's GitHub token in the browser's local storage for this site's origin. Today that origin is `alpaq92.github.io`, shared with this account's other GitHub Pages sites (13 on 2026-10-04): a script on any of them can read the token while the editor is signed in in that browser. A custom domain gives the admin an origin of its own, which is why it is first on the To do list. Until then, sign out after editing.
+Sveltia keeps the editor's GitHub token in the browser's local storage for this site's origin. Today that origin is `alpaq92.github.io`, shared with this account's other GitHub Pages sites (12 on 2026-10-04): a script on any of them can read the token while the editor is signed in in that browser. A custom domain gives the admin an origin of its own, which is why it is first on the To do list. Until then, sign out after editing.
 
 ### With the "Sign in with GitHub" button (not set up)
 
@@ -94,6 +97,7 @@ Things to know when editing a public repository this way:
 - Protecting `main` with required pull requests makes the CMS read-only (Sveltia 0.225 and later); it would then need Sveltia's editorial workflow.
 - Every save is a commit under the editor's GitHub identity. An editor who has not turned on "Keep my email addresses private" in GitHub publishes their email address in the history.
 - Add images through the media library (`images/`). An image linked from another site loads from that site and breaks the privacy page's statement that every file comes from GitHub Pages.
+- `index.html` holds fixed copies of the Polish `headline` and `description` (`<title>`, meta description, `og:title`, `og:description`, `og:image:alt`), and `images/og.png` shows the headline and the module names. After changing them in the admin, update these by hand, or link previews and crawlers without JavaScript keep the old text.
 
 ## To do
 
@@ -103,5 +107,5 @@ Things to know when editing a public repository this way:
 - [ ] **Remove leftover Publii data** — on the machine where the site was first built. Nothing was found on Tobiasz's machine (2026-10-04).
 - [x] **Check the name** — 2026-10-04: no identical trademark in the EUIPO, UPRP, WIPO (Madrid) or USPTO registers. `prowe.pl` and `prowe.com` belong to third parties and are parked for sale; `prowe.app` and `prowe.legal` were free. Similar marks and company names exist in software, so have a trademark attorney look before filing a trademark or buying a domain. The detailed report was shared outside this repository.
 - [ ] **Search engines** — done: link-preview tags and image in `index.html`, `sitemap.xml` generated on deploy. Left: verify the site in Google Search Console (URL-prefix property, HTML-tag method) and submit `sitemap.xml`; in Bing Webmaster Tools, import from Search Console. A `robots.txt` under `/prowe-website/` would be ignored. Crawlers that don't run JavaScript (AI assistants, partly Bing) still see an empty page; pre-rendering to path URLs (`/en/`, `/galena/`) fixes that in about half a day to a day, best done together with the custom domain.
-- [ ] **Upgrades, monthly and on every Sveltia security advisory** — checked 2026-10-04: Sveltia CMS 0.227.4 and marked 18.0.14 are the latest. Sveltia: change the version in `admin/index.html` and in the `$schema` line of `admin/config.yml`, recompute the `integrity` hash (`curl -sL <script URL> | openssl dgst -sha384 -binary | openssl base64 -A`) and read the release notes for BREAKING CHANGE. marked: replace `vendor/marked/marked.umd.js` and `vendor/marked/LICENSE` with the new version's `lib/marked.umd.js` and `LICENSE`.
+- [ ] **Upgrades, monthly and on every Sveltia security advisory** — checked 2026-10-04: Sveltia CMS 0.227.4 and marked 18.0.14 are the latest. Sveltia: change the version in `admin/index.html` and in the `$schema` line of `admin/config.yml`, recompute the `integrity` value (`echo "sha384-$(curl -sL <script URL> | openssl dgst -sha384 -binary | openssl base64 -A)"`) and paste the whole output into the attribute: without the `sha384-` prefix the browser ignores it and loads the file unchecked. Read the release notes for BREAKING CHANGE. marked: replace `vendor/marked/marked.umd.js` and `vendor/marked/LICENSE` with the new version's `lib/marked.umd.js` and `LICENSE`, and update the version in the README file tree.
 - [x] **Review the copy** — 2026-10-04: every claim checked against the module repositories and rewritten where the code does not support it (the goals, Atrium, Sygna's information barriers, Galena's review and encryption, Counsel's purpose, Compass). Module issues that need code rather than copy changes were reported separately.

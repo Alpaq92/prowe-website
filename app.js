@@ -36,7 +36,9 @@ function markdown(text) {
 
 // Polish typesetting keeps one-letter words off the end of a line. Done in code because
 // non-breaking spaces typed in the CMS are invisible to editors and get lost.
-const glue = (s) => s.replace(/(?<=^|\s)([aiouwz]) /gi, '$1\u00a0');
+// No lookbehind: Safari before 16.4 cannot parse it, and the whole script would fail to load.
+const glue = (s) => s.replace(/([aiouwz]) /gi,
+  (match, letter, i) => (i === 0 || /\s/.test(s[i - 1]) ? `${letter}\u00a0` : match));
 const deepGlue = (v) => typeof v === 'string' ? glue(v)
   : Array.isArray(v) ? v.map(deepGlue)
   : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deepGlue(x)]))
@@ -147,6 +149,8 @@ async function render() {
   const toggle = document.getElementById('lang-switch');
   toggle.textContent = other.toUpperCase();
   toggle.hreflang = other;
+  // Usable before the content arrives or if it fails to load; refined once the page is rendered.
+  toggle.href = href(other, { m: slug, p: page });
 
   const app = document.getElementById('app');
   const response = await fetch(`content/${lang}.json`);
