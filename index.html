@@ -7,8 +7,9 @@
     <title>Prowe</title>
     <script>
       // Before first paint, so a dark visitor never sees a white flash.
+      // Session storage only: a per-session UI preference needs no consent banner (ePrivacy art. 5(3)).
       try {
-        const t = localStorage.getItem('prowe-theme');
+        const t = sessionStorage.getItem('prowe-theme');
         if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
       } catch (e) {}
     </script>

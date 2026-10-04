@@ -100,7 +100,11 @@ function setupThemeSwitch(site) {
       const value = button.dataset.value;
       if (value === 'system') delete root.dataset.theme;
       else root.dataset.theme = value;
-      try { localStorage.setItem(THEME_KEY, value); } catch (e) { /* private mode: this visit only */ }
+      // Session only, so the choice stays a consent-free UI preference; "system" needs no entry.
+      try {
+        if (value === 'system') sessionStorage.removeItem(THEME_KEY);
+        else sessionStorage.setItem(THEME_KEY, value);
+      } catch (e) { /* storage blocked: this page only */ }
       paint();
     };
   }
