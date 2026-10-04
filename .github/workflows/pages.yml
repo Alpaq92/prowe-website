@@ -32,6 +32,42 @@ jobs:
           cp -r index.html app.js style.css content admin vendor _site/
           if [ -d images ]; then cp -r images _site/; fi
 
+      - name: Write sitemap.xml
+        # Same URLs as href() in app.js. The hreflang pairs live here because one
+        # index.html serves every ?lang/?m/?p address and cannot carry per-page tags.
+        run: |
+          node - <<'EOF'
+          const fs = require('fs');
+          const base = fs.readFileSync('admin/config.yml', 'utf8').match(/^site_url:\s*['"]?([^'"\s]+)/m)[1].replace(/\/?$/, '/');
+          const url = (lang, { m, p } = {}) => {
+            const q = new URLSearchParams();
+            if (lang !== 'pl') q.set('lang', lang);
+            if (m) q.set('m', m);
+            if (p) q.set('p', p);
+            const query = q.toString();
+            return (base + (query ? `?${query}` : '')).replaceAll('&', '&amp;');
+          };
+          const hreflang = { pl: 'pl', en: 'en', 'x-default': 'en' };
+          const { modules, legal } = JSON.parse(fs.readFileSync('content/pl.json', 'utf8'));
+          // Same rule as legalReady() in app.js: no operator data, no legal page.
+          const legalReady = legal && [legal.operator_name, legal.operator_address, legal.operator_email].every((v) => v?.trim());
+          const pages = [{}, ...modules.map((m) => ({ m: m.slug })), ...(legalReady ? [{ p: 'legal' }] : [])];
+          const entries = pages.flatMap((page) => ['pl', 'en'].map((lang) => [
+            `  <url>\n    <loc>${url(lang, page)}</loc>`,
+            ...Object.entries(hreflang).map(([code, l]) =>
+              `    <xhtml:link rel="alternate" hreflang="${code}" href="${url(l, page)}"/>`),
+            '  </url>',
+          ].join('\n')));
+          fs.writeFileSync('_site/sitemap.xml', [
+            '<?xml version="1.0" encoding="UTF-8"?>',
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+            ...entries,
+            '</urlset>',
+            '',
+          ].join('\n'));
+          console.log(`sitemap.xml: ${entries.length} URLs`);
+          EOF
+
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
