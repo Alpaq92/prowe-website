@@ -3,6 +3,9 @@ backend:
   name: github
   repo: Alpaq92/prowe-website
   branch: main
+  # Token only until an OAuth authenticator is deployed: today the
+  # "Sign in with GitHub" button goes to api.netlify.com and ends in a 404.
+  auth_methods: [token]
 
 site_url: https://alpaq92.github.io/prowe-website/
 
@@ -25,8 +28,9 @@ collections:
         i18n: true
         fields:
           - { name: title, label: Nazwa, widget: string, i18n: true }
-          - { name: headline, label: Nagłówek, widget: text, i18n: true }
+          - { name: headline, label: Nagłówek, widget: text, i18n: true, hint: 'Podgląd linków (LinkedIn, Slack, Facebook) pokazuje stałą kopię nagłówka z index.html i obrazek images/og.png. Po zmianie poproś dewelopera o ich aktualizację.' }
           - { name: intro, label: Wstęp, widget: text, i18n: true }
+          - { name: description, label: Opis strony dla wyszukiwarek, widget: text, i18n: true, hint: 'Google czyta ten opis ze strony. Podgląd linków (LinkedIn, Slack, Facebook) pokazuje stałą kopię z index.html. Po zmianie poproś dewelopera o jej aktualizację.' }
           - { name: cta_label, label: Przycisk pod wstępem, widget: string, i18n: true }
 
           - { name: goals_heading, label: Nagłówek sekcji celów, widget: string, i18n: true }
@@ -77,3 +81,43 @@ collections:
           - { name: theme_light, label: Przełącznik motywu — jasny, widget: string, i18n: true }
           - { name: theme_dark, label: Przełącznik motywu — ciemny, widget: string, i18n: true }
           - { name: footer, label: Stopka, widget: string, i18n: true }
+
+          - name: legal
+            label: Informacje prawne
+            widget: object
+            i18n: true
+            fields:
+              - { name: link_label, label: Link w stopce, widget: string, i18n: true }
+              - { name: title, label: Tytuł strony, widget: string, i18n: true }
+              # Operator fields are optional on purpose: while the operator is unknown, a required
+              # field would block saving every other content change. The page and its footer link
+              # appear only once name, address and email are all filled in.
+              - name: operator_name
+                label: 'Podmiot: nazwa (firma)'
+                widget: string
+                i18n: duplicate
+                required: false
+                hint: 'Pełna nazwa z KRS albo CEIDG z formą prawną, np. „Prowe sp. z o.o.”. Strona prawna i link w stopce pojawią się, gdy nazwa, adres i e-mail będą wypełnione.'
+              - name: operator_address
+                label: 'Podmiot: siedziba i adres'
+                widget: string
+                i18n: duplicate
+                required: false
+                hint: 'Siedziba i adres z KRS albo adres działalności z CEIDG.'
+              - name: operator_email
+                label: 'Podmiot: e-mail'
+                widget: string
+                i18n: duplicate
+                required: false
+                hint: 'Obsługiwana skrzynka. Na ten adres przychodzą też żądania z RODO.'
+              - name: operator_registry
+                label: 'Podmiot: dane rejestrowe'
+                widget: string
+                i18n: true
+                required: false
+                hint: 'Jedna linia. Sp. z o.o.: sąd rejestrowy, KRS, NIP, kapitał zakładowy (art. 206 KSH). P.S.A.: sąd rejestrowy, KRS, NIP, aktualny kapitał akcyjny (art. 300⁶¹ KSH). S.A.: sąd rejestrowy, KRS, NIP, kapitał zakładowy i wpłacony (art. 374 KSH). JDG: NIP. Jeśli dotyczy: spółka z grupy spółek dopisuje oznaczenie grupy (pkt 5 tych przepisów), a sp. z o.o. założona przez S24, do czasu pokrycia kapitału, także informację, że wymagane wkłady na kapitał zakładowy nie zostały wniesione (art. 206 § 1 pkt 4 KSH).'
+              - name: body
+                label: Treść
+                widget: markdown
+                i18n: true
+                hint: 'Wstawki {operator_name}, {operator_address}, {operator_email} i {operator_registry} strona zastępuje danymi z pól powyżej.'

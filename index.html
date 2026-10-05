@@ -3,17 +3,32 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Prowe — platforma modułów dla kancelarii i działów prawnych, działająca na Twoim serwerze." />
-    <title>Prowe</title>
+    <meta name="description" content="Prowe to modułowa platforma dla kancelarii i działów prawnych, która działa na Twoim serwerze." />
+    <title>Prowe | Oprogramowanie dla prawników, które działa na Twoim serwerze</title>
+    <!-- Link-preview bots may not run JavaScript, so these tags sit in the raw HTML.
+         Every ?lang / ?m / ?p address is served this same file: one shared preview, and
+         deliberately no og:url, rel="canonical" or hreflang, which would point every page
+         at the home page. Absolute URLs: update them with the custom domain. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Prowe" />
+    <meta property="og:title" content="Oprogramowanie dla prawników, które działa na Twoim serwerze" />
+    <meta property="og:description" content="Prowe to modułowa platforma dla kancelarii i działów prawnych, która działa na Twoim serwerze." />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:image" content="https://alpaq92.github.io/prowe-website/images/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Prowe: oprogramowanie dla prawników, które działa na Twoim serwerze" />
+    <meta name="twitter:card" content="summary_large_image" />
     <script>
       // Before first paint, so a dark visitor never sees a white flash.
+      // Session storage only: a per-session UI preference needs no consent banner (ePrivacy art. 5(3)).
       try {
-        const t = localStorage.getItem('prowe-theme');
+        const t = sessionStorage.getItem('prowe-theme');
         if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
       } catch (e) {}
     </script>
     <link rel="stylesheet" href="style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/marked@18.0.14/lib/marked.umd.js" defer></script>
+    <script src="vendor/marked/marked.umd.js" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body>

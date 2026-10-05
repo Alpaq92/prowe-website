@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>Prowe — administracja</title>
-    <script src="https://unpkg.com/@sveltia/cms@0.227.4/dist/sveltia-cms.js"></script>
+    <!-- SRI pins the main bundle, which handles the GitHub token. When bumping the version,
+         recompute the hash, otherwise the browser refuses to load the panel. -->
+    <script
+      src="https://unpkg.com/@sveltia/cms@0.227.4/dist/sveltia-cms.js"
+      integrity="sha384-mBcoOD7DR0BbWeYAFwFdECzSv0wajVTPEnBQu5ZOpA2CbqM4ymwUdUq0yXOxOYKE"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body></body>
 </html>

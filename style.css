@@ -53,6 +53,7 @@ body {
 }
 
 a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
 
@@ -71,8 +72,8 @@ a { color: var(--accent); }
 .nav a { color: var(--muted); font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap; }
 .nav a:hover { color: var(--fg); }
 
-/* Clear the sticky header when jumping to a section. */
-.section { scroll-margin-top: 72px; }
+/* Clear the sticky header when jumping to a section or moving focus up with the keyboard. */
+html { scroll-padding-top: 72px; }
 
 .brand {
   display: flex;
@@ -234,8 +235,10 @@ a { color: var(--accent); }
 .module h1 { margin: 0 0 16px; font-size: clamp(2rem, 6vw, 3rem); line-height: 1.1; letter-spacing: -0.03em; }
 .module .label { margin-bottom: 14px; }
 
-.prose { max-width: 68ch; }
+.prose { max-width: 68ch; overflow-wrap: anywhere; }
 .prose p { margin: 0 0 16px; }
+.prose h2 { margin: 40px 0 12px; font-size: clamp(1.4rem, 4vw, 1.75rem); line-height: 1.2; letter-spacing: -0.02em; }
+.prose h3 { margin: 28px 0 8px; font-size: 1.15rem; line-height: 1.3; letter-spacing: -0.01em; }
 .prose ul { margin: 8px 0 0; padding: 0; list-style: none; }
 .prose li { position: relative; padding: 10px 0 10px 30px; border-top: 1px solid var(--line); }
 .prose li:last-child { border-bottom: 1px solid var(--line); }
@@ -251,14 +254,15 @@ a { color: var(--accent); }
   transform: rotate(-45deg);
 }
 
-footer { padding: 32px 20px 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+footer.wrap { padding-top: 32px; padding-bottom: 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+footer a { color: inherit; }
 
 /* ── small screens ──────────────────────────────────────── */
 @media (max-width: 720px) {
   /* Section links drop to their own row under the brand and controls. */
   .top-inner { justify-content: space-between; padding-top: 8px; }
   .nav { order: 3; width: 100%; margin: 8px 0 0; padding: 10px 0; border-top: 1px solid var(--line); overflow-x: auto; }
-  .section { scroll-margin-top: 124px; }
+  html { scroll-padding-top: 124px; }
 }
 
 @media (max-width: 600px) {

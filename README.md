@@ -14,13 +14,16 @@ style.css
 content/pl.json     all site content, Polish
 content/en.json     all site content, English
 admin/              Sveltia CMS: index.html + config.yml
-.github/workflows/  checks every PR, deploys main to GitHub Pages
+vendor/marked/      marked 18.0.14 with its licence, served from the site
+images/og.png       link-preview image
+.github/workflows/  checks every PR, deploys main to GitHub Pages, writes sitemap.xml
 ```
 
 ## Pages
 
 - `./` — home (Polish), `?lang=en` — home (English)
 - `?m=galena` — a module page, `?lang=en&m=galena` — the same in English
+- `?p=legal` — legal notice and privacy (appears once the operator is filled in at /admin/)
 
 The PL/EN link in the header keeps you on the same page.
 
@@ -35,11 +38,12 @@ Saving in the admin commits to `main`, and the Pages workflow publishes it withi
 Sign-in options:
 
 - **Zaloguj się za pomocą tokenu dostępu** — paste a GitHub token with write access to this
-  repository (the dialog links to a pre-filled token page).
+  repository. The owner can use the token page the dialog links to; collaborators need a classic
+  token (see [PROJECT.md](PROJECT.md#with-an-access-token-works-now)).
 - **Pracuj z lokalnym repozytorium** — on your own machine in Chrome or Edge: pick this folder,
   edit, then commit with git yourself.
-- **Zaloguj się przez GitHub** — needs an OAuth client
-  ([Sveltia CMS Authenticator](https://github.com/sveltia/sveltia-cms-auth)); not set up yet.
+- **Zaloguj się przez GitHub** — hidden until an OAuth client
+  ([Sveltia CMS Authenticator](https://github.com/sveltia/sveltia-cms-auth)) is deployed.
 
 ## Run locally
 

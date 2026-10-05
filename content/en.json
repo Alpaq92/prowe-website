@@ -1,15 +1,16 @@
 {
   "title": "Prowe",
   "headline": "Legal software that runs on your own server.",
-  "intro": "Prowe is a platform of modules for law firms and legal departments: documents, matters, questionnaires and contracts. The modules share one core — accounts, permissions and the audit log.",
+  "intro": "Prowe is a modular platform for law firms and legal departments. It covers documents, matters, outside counsel evaluation and contract analysis. Every module runs on a shared core that handles accounts, permissions and the audit log.",
+  "description": "Prowe is a modular platform for law firms and legal departments that runs on your own server.",
   "cta_label": "See the modules",
   "goals_heading": "Goals",
   "goals": [
-    { "title": "Your data stays with you", "text": "Prowe is installed on the firm's own server. Client files never go to someone else's cloud." },
-    { "title": "History you can prove", "text": "The audit log is append-only: the application has no permission to change it. Documents are versioned in git." },
-    { "title": "One platform", "text": "One account, one admin pane and shared permissions across every module." },
-    { "title": "Open foundations", "text": "Built only on permissively licensed open-source components. No vendor lock-in." },
-    { "title": "Polish and English", "text": "Interface and content in both languages from day one." }
+    { "title": "Your data stays with you", "text": "Prowe is installed on your organization's own server. Client files stay out of someone else's cloud unless an administrator connects an outside service, such as a database or an AI model." },
+    { "title": "History you can audit", "text": "The audit log is append-only: the application has no permission to change it. In Galena, every version of a document is kept, along with who made it and when." },
+    { "title": "One platform", "text": "One account and one sign-in for every available module. Accounts and module access live in one admin panel." },
+    { "title": "Open foundations", "text": "Prowe is built on open-source software, mostly under permissive licenses. Data lives in a PostgreSQL database, Git repositories and ordinary files, not in a closed format." },
+    { "title": "Polish and English", "text": "Interface in Polish and English. In Sygna, the English version covers only the main labels for now." }
   ],
   "modules_heading": "Modules",
   "modules": [
@@ -19,39 +20,39 @@
       "status": "live",
       "category": "Platform",
       "summary": "The front door: launcher, module catalog and administration.",
-      "body": "Atrium shows the modules you have access to and lets you request the rest. Administrators run the whole platform from it.\n\n- A launcher with your apps and a module switcher\n- A module catalog with access requests\n- Access for people and organizational units, including the units below them\n- Accounts, permissions, the organization tree and the audit log in one pane"
+      "body": "Atrium shows the modules you have access to and lets you request the rest. Administrators manage accounts and access to every module from it.\n\n- A launcher with your modules and a module switcher in the top bar\n- A module catalog with access requests\n- Access for people and organizational units, including the units below them\n- Accounts, module access and the organizational structure in one place, with its own audit log"
     },
     {
       "slug": "galena",
       "name": "Galena",
       "status": "live",
       "category": "Documents",
-      "summary": "A cloud drive with the full change history in git.",
-      "body": "Galena looks like an ordinary drive: workspaces, folders, drag-and-drop, sharing. Underneath, every file lives in a git repository.\n\n- Every change has an author and a date; file history and a version graph\n- Drafts are reviewed before they are published\n- PDF and image preview\n- Optional AES-256-GCM encryption of files and folders"
+      "summary": "A shared drive for your team, with the full history of every change.",
+      "body": "Galena looks like an ordinary drive: workspaces, folders, moving files by drag-and-drop, sharing. Underneath, every file lives in a Git repository, so the change history records itself and nobody needs to know Git.\n\n- History of every file: who changed what, and when\n- An interactive graph of all versions\n- Optional review: drafts with comment threads and approval before publishing\n- PDF and image preview\n- Optional encryption of individual files (AES-256-GCM)"
     },
     {
       "slug": "sygna",
       "name": "Sygna",
       "status": "live",
       "category": "Practice",
-      "summary": "Practice management: clients, matters, deadlines and time.",
-      "body": "Sygna runs a firm from first contact to the final invoice.\n\n- Clients, matters and the parties to them\n- Conflict-of-interest check when a matter is opened\n- Procedural deadlines and time recording\n- Information barriers: a walled matter disappears for everyone outside its team, administrators included"
+      "summary": "Practice management: clients, matters, deadlines and time recording.",
+      "body": "With Sygna you run a matter from first contact with the client to billing.\n\n- Clients, matters and the parties to them\n- Conflict-of-interest check when a matter is opened\n- Procedural deadlines and time recording\n- Information barriers: named people, administrators included, lose access to a walled matter"
     },
     {
       "slug": "counsel",
       "name": "Counsel Scorecard",
       "status": "live",
       "category": "Assessment",
-      "summary": "Scored questionnaires with a full answer history.",
-      "body": "Counsel Scorecard builds questionnaires and keeps the answers together with their change history.\n\n- Questions, answer options and weighted sets\n- Scores calculated automatically\n- Every correction to an answer stays in the history\n- Full-text search, limited by permissions"
+      "summary": "Outside counsel evaluation: scored questionnaires with a full answer history.",
+      "body": "Counsel Scorecard is for building scored questionnaires. Out of the box, a legal department uses it to rate its outside law firms, and the answers are kept together with their change history.\n\n- Questions, answer options and a weight for each question\n- Scores calculated automatically\n- Every correction to an answer stays in the history\n- Full-text search that shows only what you have access to"
     },
     {
       "slug": "compass",
       "name": "Compass",
       "status": "soon",
       "category": "Contracts",
-      "summary": "Contract management for legal teams.",
-      "body": "Compass is a contract management system for legal departments and firms working across several jurisdictions.\n\n- A contract repository with dates and renewals\n- Clause variants for different jurisdictions\n- AI assistance when drafting clauses"
+      "summary": "Contract analysis with a lawyer's sign-off on the report.",
+      "body": "Compass helps law firms and legal departments analyze contracts. A lawyer runs the analysis, reads the report and signs off that they have reviewed it.\n\n- A contract card: parties, term, renewal and whether the contract is in force, each value backed by a quote from the contract\n- The firm's red lines (e.g. a cap on contractual penalties): a verdict on every rule, pointing to the clause\n- The AI model runs locally, e.g. on the lawyer's laptop, or at an outside provider the administrator picks (EU/EEA only by default)"
     }
   ],
   "stack_heading": "Technology",
@@ -60,6 +61,7 @@
     { "label": "Database", "value": "PostgreSQL; a separate schema and roles for each module" },
     { "label": "Sign-in", "value": "Argon2id, server-side sessions" },
     { "label": "Audit log", "value": "Append-only, enforced by database permissions" },
+    { "label": "Document versions", "value": "Git (Galena)" },
     { "label": "Deployment", "value": "Docker Compose and Caddy on a single server" }
   ],
   "soon_label": "soon",
@@ -67,5 +69,14 @@
   "theme_system": "System theme",
   "theme_light": "Light theme",
   "theme_dark": "Dark theme",
-  "footer": "© 2026 Prowe"
+  "footer": "© 2026 Prowe",
+  "legal": {
+    "link_label": "Legal notice and privacy",
+    "title": "Legal notice and privacy",
+    "operator_name": "",
+    "operator_address": "",
+    "operator_email": "",
+    "operator_registry": "",
+    "body": "## Who runs this site\n\nThis site is run by {operator_name}, {operator_address}.\n\nEmail: [{operator_email}](mailto:{operator_email})\n\n{operator_registry}\n\n## Privacy\n\nThis site uses no cookies, analytics or ads. Apart from the editor panel (/admin/), it has no forms and never asks for passwords or payments. We keep no visitor statistics or logs of our own. The site's scripts only display and format its content and remember your theme (see below); they do not track what you do.\n\nAll of the site's files, including the marked script that formats module descriptions and this page, come from GitHub Pages. To download them, your browser sends GitHub your IP address, among other things. {operator_name} is responsible for that transfer as the data controller.\n\n### Hosting: GitHub Pages\n\nThe site is hosted by GitHub, and its files are delivered on GitHub's behalf by the Fastly network. GitHub logs the IP address of every visitor for security purposes and does so under its own rules. According to the GitHub Privacy Statement, the controller of this data is GitHub, Inc. (USA) or GitHub B.V. (the Netherlands). The data may reach the USA. GitHub, Inc. states that it participates in the EU-U.S. Data Privacy Framework, for which the European Commission has found an adequate level of data protection. Details: [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).\n\n### Legal basis and retention\n\nSending your IP address to GitHub is necessary to display the site. We rely on our legitimate interest in making the site available (Article 6(1)(f) GDPR). Without your IP address, your browser cannot download the site. We do not store this data ourselves. GitHub does not state a specific retention period; its privacy policy sets out the general rules. For this data, contact GitHub directly.\n\n### Email\n\nIf you write to {operator_email}, we process your email address, the details in your signature and your message in order to reply (Article 6(1)(f) GDPR). If the conversation concerns a contract with you, we also process them to prepare and conclude it (Article 6(1)(b) GDPR). Providing the data is voluntary, but without an email address we cannot reply. We keep messages until the matter is closed and, if a claim could arise from it, until that claim is time-barred. An email provider runs the mailbox on our behalf.\n\n### Your rights\n\nYou can ask for access to your data, its rectification, erasure or restriction of processing and, where the basis is a contract, its portability. Write to {operator_email}. We make no automated decisions about you and do not profile you. You can also lodge a complaint with the Polish data protection authority, the President of the Personal Data Protection Office ([uodo.gov.pl](https://uodo.gov.pl)), or with the data protection authority in the EU or EEA country where you live or work.\n\n**Right to object.** You may object at any time, on grounds relating to your particular situation, to processing of your data based on our legitimate interest (Article 21 GDPR). Write to {operator_email}.\n\n### Editor panel\n\nThe /admin/ address is for the site's editors only. Opening it makes your browser download the Sveltia CMS program from unpkg.com and fonts from cdn.jsdelivr.net. Right away and then every 5 minutes, the panel also checks www.githubstatus.com to see whether GitHub is up. All three services therefore receive your IP address. As soon as it opens, the panel saves its own settings and interface translations in the browser's storage. Editors sign in with a GitHub token. The panel then connects to GitHub services and also saves the token in the browser's storage, where it stays until the editor signs out. We rely on our legitimate interest in running the editor panel (Article 6(1)(f) GDPR). The token can change the site's content, so sign out when you finish, especially on a shared computer.\n\n## Browser storage\n\nThis site uses no cookies. When you pick the light or dark theme with the switch, the site saves that choice in your browser's session storage (sessionStorage) under the name prowe-theme. The entry holds a single word: light or dark. Its only purpose is to open the site's other pages in the theme you chose, which is why the site checks for the entry each time a page opens. Choosing the system theme removes the entry.\n\nIf you don't click the switch, the site saves nothing (the editor panel is described above). The entry is not sent to us or to anyone else. Your browser keeps it until you close the tab (if you restore your previous session, the entry comes back with the tab). Until then, pages on the same domain opened in that tab can read it; on the alpaq92.github.io domain, that includes other sites published from the same GitHub account.\n"
+  }
 }

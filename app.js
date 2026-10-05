@@ -1,5 +1,6 @@
 // Renders the page from the JSON that Sveltia CMS writes to content/<locale>.json.
-// URL: ?lang=en for English (Polish is the default), &m=<slug> for a module page.
+// URL: ?lang=en for English (Polish is the default), &m=<slug> for a module page,
+// &p=legal for the legal notice.
 
 const LOCALES = ['pl', 'en'];
 const DEFAULT_LOCALE = 'pl';
@@ -8,12 +9,14 @@ const THEME_KEY = 'prowe-theme';
 const params = new URLSearchParams(location.search);
 const lang = LOCALES.includes(params.get('lang')) ? params.get('lang') : DEFAULT_LOCALE;
 const slug = params.get('m');
+const page = params.get('p');
 
-function href(locale, moduleSlug, hash = '') {
-  const p = new URLSearchParams();
-  if (locale !== DEFAULT_LOCALE) p.set('lang', locale);
-  if (moduleSlug) p.set('m', moduleSlug);
-  const query = p.toString();
+function href(locale, { m, p } = {}, hash = '') {
+  const q = new URLSearchParams();
+  if (locale !== DEFAULT_LOCALE) q.set('lang', locale);
+  if (m) q.set('m', m);
+  if (p) q.set('p', p);
+  const query = q.toString();
   return (query ? `?${query}` : './') + hash;
 }
 
@@ -31,11 +34,24 @@ function markdown(text) {
   return node;
 }
 
+// Polish typesetting keeps one-letter words off the end of a line. Done in code because
+// non-breaking spaces typed in the CMS are invisible to editors and get lost.
+// No lookbehind: Safari before 16.4 cannot parse it, and the whole script would fail to load.
+const glue = (s) => s.replace(/([aiouwz]) /gi,
+  (match, letter, i) => (i === 0 || /\s/.test(s[i - 1]) ? `${letter}\u00a0` : match));
+const deepGlue = (v) => typeof v === 'string' ? glue(v)
+  : Array.isArray(v) ? v.map(deepGlue)
+  : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deepGlue(x)]))
+  : v;
+
+// Google reads a description set by script; index.html keeps a static one for crawlers without JS.
+const describe = (text) => document.querySelector('meta[name="description"]').setAttribute('content', text);
+
 const badge = (site, mod) => (mod.status === 'soon' ? el('span', { class: 'badge' }, site.soon_label) : null);
 const label = (text) => el('p', { class: 'label' }, text);
 
 function moduleCard(site, mod) {
-  return el('a', { class: 'card', href: href(lang, mod.slug) },
+  return el('a', { class: 'card', href: href(lang, { m: mod.slug }) },
     el('span', { class: 'card-cat' }, mod.category),
     el('h3', {}, mod.name, badge(site, mod)),
     el('p', {}, mod.summary),
@@ -43,7 +59,8 @@ function moduleCard(site, mod) {
 }
 
 function homePage(site) {
-  document.title = `${site.title} — ${site.headline}`;
+  document.title = `${site.title} | ${site.headline.replace(/\.$/, '')}`;
+  describe(site.description);
   return [
     el('section', { class: 'hero' },
       el('h1', {}, site.headline),
@@ -64,10 +81,11 @@ function homePage(site) {
 }
 
 function modulePage(site, mod) {
-  document.title = `${mod.name} — ${site.title}`;
+  document.title = `${mod.name} | ${site.title}`;
+  describe(mod.summary);
   const others = site.modules.filter((m) => m.slug !== mod.slug);
   return [
-    el('a', { class: 'back', href: href(lang, null, '#modules') }, `← ${site.back_label}`),
+    el('a', { class: 'back', href: href(lang, {}, '#modules') }, `← ${site.back_label}`),
     el('article', { class: 'module' },
       el('p', { class: 'label' }, mod.category),
       el('h1', {}, mod.name, badge(site, mod)),
@@ -79,11 +97,25 @@ function modulePage(site, mod) {
   ];
 }
 
-// Section links in the header. On a module page they lead back to the home page sections.
-function renderNav(site) {
+// Without a known operator the page would be an anonymous privacy notice, so it stays hidden.
+const legalReady = (legal) => Boolean(legal
+  && [legal.operator_name, legal.operator_address, legal.operator_email].every((v) => v?.trim()));
+
+function legalPage(site, legal) {
+  document.title = `${legal.title} | ${site.title}`;
+  describe(site.description);
+  const body = legal.body.replace(/\{(operator_(?:name|address|email|registry))\}/g, (_, key) => legal[key] || '');
+  return [
+    el('a', { class: 'back', href: href(lang) }, `← ${site.title}`),
+    el('article', { class: 'module' }, el('h1', {}, legal.title), markdown(body)),
+  ];
+}
+
+// Section links in the header. On any page but home they lead back to the home page sections.
+function renderNav(site, home) {
   const sections = [['goals', site.goals_heading], ['modules', site.modules_heading], ['stack', site.stack_heading]];
   document.getElementById('nav').replaceChildren(...sections.map(([id, text]) =>
-    el('a', { href: slug ? href(lang, null, `#${id}`) : `#${id}` }, text)));
+    el('a', { href: home ? `#${id}` : href(lang, {}, `#${id}`) }, text)));
 }
 
 function setupThemeSwitch(site) {
@@ -100,7 +132,11 @@ function setupThemeSwitch(site) {
       const value = button.dataset.value;
       if (value === 'system') delete root.dataset.theme;
       else root.dataset.theme = value;
-      try { localStorage.setItem(THEME_KEY, value); } catch (e) { /* private mode: this visit only */ }
+      // Session only, so the choice stays a consent-free UI preference; "system" needs no entry.
+      try {
+        if (value === 'system') sessionStorage.removeItem(THEME_KEY);
+        else sessionStorage.setItem(THEME_KEY, value);
+      } catch (e) { /* storage blocked: this page only */ }
       paint();
     };
   }
@@ -112,8 +148,9 @@ async function render() {
   const other = LOCALES.find((l) => l !== lang);
   const toggle = document.getElementById('lang-switch');
   toggle.textContent = other.toUpperCase();
-  toggle.href = href(other, slug);
   toggle.hreflang = other;
+  // Usable before the content arrives or if it fails to load; refined once the page is rendered.
+  toggle.href = href(other, { m: slug, p: page });
 
   const app = document.getElementById('app');
   const response = await fetch(`content/${lang}.json`);
@@ -121,11 +158,18 @@ async function render() {
     app.replaceChildren(el('p', {}, `content/${lang}.json: HTTP ${response.status}`));
     return;
   }
-  const site = await response.json();
+  const json = await response.json();
+  const site = lang === 'pl' ? deepGlue(json) : json;
   const mod = slug && site.modules.find((m) => m.slug === slug);
-  app.replaceChildren(...(mod ? modulePage(site, mod) : homePage(site)));
-  document.getElementById('footer').textContent = site.footer;
-  renderNav(site);
+  const legal = legalReady(site.legal) && site.legal;
+  const showLegal = !mod && page === 'legal' && legal;
+  app.replaceChildren(...(mod ? modulePage(site, mod) : showLegal ? legalPage(site, legal) : homePage(site)));
+  // Links follow what was rendered: an unknown slug or a hidden legal page fall back to home.
+  const view = mod ? { m: mod.slug } : showLegal ? { p: 'legal' } : {};
+  toggle.href = href(other, view);
+  document.getElementById('footer').replaceChildren(site.footer,
+    ...(legal ? [' · ', el('a', { href: href(lang, { p: 'legal' }) }, legal.link_label)] : []));
+  renderNav(site, !mod && !showLegal);
   setupThemeSwitch(site);
   // The content arrives after load, so the browser's own jump to #section missed it.
   if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
